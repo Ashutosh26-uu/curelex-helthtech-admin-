@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Dashboard.css';
 
 const roleData = {
-  ceo: {
+  'C.E.O.': {
     title: "CEO (Founder)",
     level: "Full System Authority",
     color: "#e74c3c",
@@ -15,7 +15,7 @@ const roleData = {
     ],
     cannotAccess: ["Clinical diagnosis or prescriptions"]
   },
-  coo: {
+  'C.O.O.': {
     title: "COO (Founder)",
     level: "Full System Authority",
     color: "#e74c3c",
@@ -28,7 +28,7 @@ const roleData = {
     ],
     cannotAccess: ["Medical diagnosis or reports"]
   },
-  cto: {
+  'C.T.O.': {
     title: "CTO (Technology, Product & Data Head)",
     level: "Full Technical Authority",
     color: "#9b59b6",
@@ -47,7 +47,7 @@ const roleData = {
       "Medical diagnosis data"
     ]
   },
-  cfo: {
+  'C.F.O.': {
     title: "CFO (Finance Head)",
     level: "Finance-Only",
     color: "#f39c12",
@@ -64,7 +64,7 @@ const roleData = {
       "Patient analytics beyond finance aggregates"
     ]
   },
-  chro: {
+  'C.H.R.O.': {
     title: "CHRO (Human Resources Head)",
     level: "HR-Only",
     color: "#3498db",
@@ -76,7 +76,7 @@ const roleData = {
     ],
     cannotAccess: ["Finance", "Technology", "Operations", "Patient data"]
   },
-  cmo: {
+  'C.M.O.': {
     title: "CMO (Chief Marketing Officer)",
     level: "Marketing & Growth",
     color: "#e67e22",
@@ -95,7 +95,7 @@ const roleData = {
       "Medical or diagnostic data"
     ]
   },
-  clo: {
+  'C.L.O.': {
     title: "CLO (Chief Legal Officer)",
     level: "Legal, Risk & Compliance",
     color: "#34495e",
