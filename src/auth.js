@@ -93,4 +93,31 @@ export const authenticateUser = (email, password) => {
   return null;
 };
 
+// Password reset function (for demo purposes)
+export const resetPassword = (email, newPassword) => {
+  const users = getCredentials();
+  
+  if (!users[email]) {
+    return { success: false, message: 'Email not found' };
+  }
+  
+  // In a real application, this would update the database
+  // For demo purposes, we'll just validate the request
+  if (newPassword.length < 8) {
+    return { success: false, message: 'Password must be at least 8 characters long' };
+  }
+  
+  // Simulate successful password reset
+  return { 
+    success: true, 
+    message: 'Password reset successful. Please use your new password to login.' 
+  };
+};
+
+// Check if email exists in the system
+export const checkEmailExists = (email) => {
+  const users = getCredentials();
+  return users.hasOwnProperty(email);
+};
+
 export { getCredentials };

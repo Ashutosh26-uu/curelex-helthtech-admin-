@@ -64,7 +64,9 @@ function Dashboard({ userRole, userEmail, onLogout }) {
   const [users, setUsers] = useState([
     { id: 1, name: 'Dr. John Smith', email: 'john@healthtech.com', role: 'Doctor', status: 'Active' },
     { id: 2, name: 'Sarah Johnson', email: 'sarah@healthtech.com', role: 'Nurse', status: 'Active' },
-    { id: 3, name: 'Mike Wilson', email: 'mike@healthtech.com', role: 'Admin', status: 'Inactive' }
+    { id: 3, name: 'Mike Wilson', email: 'mike@healthtech.com', role: 'Admin', status: 'Inactive' },
+    { id: 4, name: 'Dr. Emily Chen', email: 'emily@healthtech.com', role: 'Pharmacist', status: 'Active' },
+    { id: 5, name: 'Dr. Robert Kumar', email: 'robert@healthtech.com', role: 'Pathologist', status: 'Active' }
   ]);
   
   const [patients, setPatients] = useState([
@@ -176,6 +178,12 @@ function Dashboard({ userRole, userEmail, onLogout }) {
                   <option value="Doctor">Doctor</option>
                   <option value="Nurse">Nurse</option>
                   <option value="Admin">Admin</option>
+                  {(userRole === 'C.E.O.' || userRole === 'C.O.O.') && (
+                    <>
+                      <option value="Pharmacist">Pharmacist</option>
+                      <option value="Pathologist">Pathologist</option>
+                    </>
+                  )}
                 </select>
               </>
             )}
@@ -501,21 +509,777 @@ function Dashboard({ userRole, userEmail, onLogout }) {
           </div>
         );
         
-      default:
+      case 'settings':
         return (
           <div className="section-content">
             <div className="section-header">
-              <h2>{activeSection.charAt(0).toUpperCase() + activeSection.slice(1)}</h2>
-              <div className="breadcrumb">Home / {activeSection}</div>
+              <h2>System Settings</h2>
+              <div className="breadcrumb">Home / Settings</div>
             </div>
-            <div className="coming-soon">
-              <h3>Feature Available</h3>
-              <p>This {activeSection} section is fully functional with interactive features.</p>
-              <div className="feature-list">
-                <div className="feature-item">✅ Real-time data updates</div>
-                <div className="feature-item">✅ Interactive dashboards</div>
-                <div className="feature-item">✅ Data management tools</div>
-                <div className="feature-item">✅ Advanced analytics</div>
+            
+            <div className="settings-grid">
+              <div className="settings-card">
+                <h3>General Settings</h3>
+                <div className="setting-item">
+                  <label>System Name</label>
+                  <input type="text" defaultValue="Curelex HealthTech" />
+                </div>
+                <div className="setting-item">
+                  <label>Time Zone</label>
+                  <select defaultValue="UTC-5">
+                    <option value="UTC-5">Eastern Time (UTC-5)</option>
+                    <option value="UTC-6">Central Time (UTC-6)</option>
+                    <option value="UTC-7">Mountain Time (UTC-7)</option>
+                    <option value="UTC-8">Pacific Time (UTC-8)</option>
+                  </select>
+                </div>
+                <div className="setting-item">
+                  <label>Language</label>
+                  <select defaultValue="en">
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                  </select>
+                </div>
+                <button className="btn-primary">Save Changes</button>
+              </div>
+              
+              <div className="settings-card">
+                <h3>Security Settings</h3>
+                <div className="setting-item">
+                  <label>Two-Factor Authentication</label>
+                  <div className="toggle-switch">
+                    <input type="checkbox" id="2fa" defaultChecked />
+                    <label htmlFor="2fa" className="toggle-label">Enabled</label>
+                  </div>
+                </div>
+                <div className="setting-item">
+                  <label>Session Timeout (minutes)</label>
+                  <input type="number" defaultValue="30" min="5" max="120" />
+                </div>
+                <div className="setting-item">
+                  <label>Password Policy</label>
+                  <select defaultValue="strong">
+                    <option value="basic">Basic (8 characters)</option>
+                    <option value="strong">Strong (12 characters + symbols)</option>
+                    <option value="enterprise">Enterprise (16 characters + MFA)</option>
+                  </select>
+                </div>
+                <button className="btn-primary">Update Security</button>
+              </div>
+              
+              <div className="settings-card">
+                <h3>Notification Settings</h3>
+                <div className="setting-item">
+                  <label>Email Notifications</label>
+                  <div className="toggle-switch">
+                    <input type="checkbox" id="email" defaultChecked />
+                    <label htmlFor="email" className="toggle-label">Enabled</label>
+                  </div>
+                </div>
+                <div className="setting-item">
+                  <label>SMS Alerts</label>
+                  <div className="toggle-switch">
+                    <input type="checkbox" id="sms" />
+                    <label htmlFor="sms" className="toggle-label">Disabled</label>
+                  </div>
+                </div>
+                <div className="setting-item">
+                  <label>System Alerts</label>
+                  <div className="toggle-switch">
+                    <input type="checkbox" id="alerts" defaultChecked />
+                    <label htmlFor="alerts" className="toggle-label">Enabled</label>
+                  </div>
+                </div>
+                <button className="btn-primary">Save Preferences</button>
+              </div>
+              
+              <div className="settings-card">
+                <h3>System Information</h3>
+                <div className="info-item">
+                  <span className="info-label">Version:</span>
+                  <span className="info-value">v2.1.4</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Last Update:</span>
+                  <span className="info-value">January 15, 2024</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Database Status:</span>
+                  <span className="info-value status-online">Online</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Server Status:</span>
+                  <span className="info-value status-online">Healthy</span>
+                </div>
+                <button className="btn-primary">Check for Updates</button>
+              </div>
+            </div>
+          </div>
+        );
+        
+      case 'reports':
+        return (
+          <div className="section-content">
+            <div className="section-header">
+              <h2>Reports & Analytics</h2>
+              <div className="breadcrumb">Home / Reports</div>
+              <button className="btn-primary">Generate Report</button>
+            </div>
+            
+            <div className="reports-grid">
+              <div className="report-card">
+                <div className="report-icon">📊</div>
+                <h3>Patient Analytics</h3>
+                <p>Comprehensive patient data analysis and trends</p>
+                <div className="report-stats">
+                  <span>Last 30 days: +15% growth</span>
+                </div>
+                <button className="btn-primary">View Report</button>
+              </div>
+              
+              <div className="report-card">
+                <div className="report-icon">💰</div>
+                <h3>Financial Report</h3>
+                <p>Revenue, expenses, and financial performance</p>
+                <div className="report-stats">
+                  <span>Monthly Revenue: $284K</span>
+                </div>
+                <button className="btn-primary">View Report</button>
+              </div>
+              
+              <div className="report-card">
+                <div className="report-icon">👥</div>
+                <h3>Staff Performance</h3>
+                <p>Employee productivity and performance metrics</p>
+                <div className="report-stats">
+                  <span>Average Rating: 4.8/5</span>
+                </div>
+                <button className="btn-primary">View Report</button>
+              </div>
+              
+              <div className="report-card">
+                <div className="report-icon">📈</div>
+                <h3>Operational Metrics</h3>
+                <p>System performance and operational efficiency</p>
+                <div className="report-stats">
+                  <span>Uptime: 99.9%</span>
+                </div>
+                <button className="btn-primary">View Report</button>
+              </div>
+            </div>
+            
+            <div className="dashboard-card" style={{marginTop: '24px'}}>
+              <h3>Recent Reports</h3>
+              <div className="report-list">
+                <div className="report-item">
+                  <div className="report-info">
+                    <div className="report-name">Monthly Patient Summary</div>
+                    <div className="report-date">Generated: Jan 15, 2024</div>
+                  </div>
+                  <button className="btn-sm">Download</button>
+                </div>
+                <div className="report-item">
+                  <div className="report-info">
+                    <div className="report-name">Financial Quarter Report</div>
+                    <div className="report-date">Generated: Jan 10, 2024</div>
+                  </div>
+                  <button className="btn-sm">Download</button>
+                </div>
+                <div className="report-item">
+                  <div className="report-info">
+                    <div className="report-name">Staff Performance Review</div>
+                    <div className="report-date">Generated: Jan 8, 2024</div>
+                  </div>
+                  <button className="btn-sm">Download</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+        
+      case 'analytics':
+        return (
+          <div className="section-content">
+            <div className="section-header">
+              <h2>Advanced Analytics</h2>
+              <div className="breadcrumb">Home / Analytics</div>
+            </div>
+            
+            <div className="analytics-dashboard">
+              <div className="analytics-card">
+                <h3>Patient Flow Analysis</h3>
+                <div className="chart-placeholder">
+                  <div className="chart-bar" style={{height: '60%'}}></div>
+                  <div className="chart-bar" style={{height: '80%'}}></div>
+                  <div className="chart-bar" style={{height: '45%'}}></div>
+                  <div className="chart-bar" style={{height: '90%'}}></div>
+                  <div className="chart-bar" style={{height: '70%'}}></div>
+                </div>
+                <div className="chart-labels">
+                  <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span>
+                </div>
+              </div>
+              
+              <div className="analytics-card">
+                <h3>Revenue Trends</h3>
+                <div className="trend-chart">
+                  <div className="trend-line"></div>
+                  <div className="trend-points">
+                    <div className="trend-point" style={{left: '10%', bottom: '30%'}}></div>
+                    <div className="trend-point" style={{left: '30%', bottom: '50%'}}></div>
+                    <div className="trend-point" style={{left: '50%', bottom: '40%'}}></div>
+                    <div className="trend-point" style={{left: '70%', bottom: '70%'}}></div>
+                    <div className="trend-point" style={{left: '90%', bottom: '80%'}}></div>
+                  </div>
+                </div>
+                <div className="analytics-summary">
+                  <span className="trend-up">↗ +18% this month</span>
+                </div>
+              </div>
+              
+              <div className="analytics-card">
+                <h3>Department Performance</h3>
+                <div className="performance-list">
+                  <div className="performance-item">
+                    <span>Cardiology</span>
+                    <div className="performance-bar">
+                      <div className="performance-fill" style={{width: '92%'}}></div>
+                    </div>
+                    <span>92%</span>
+                  </div>
+                  <div className="performance-item">
+                    <span>Emergency</span>
+                    <div className="performance-bar">
+                      <div className="performance-fill" style={{width: '88%'}}></div>
+                    </div>
+                    <span>88%</span>
+                  </div>
+                  <div className="performance-item">
+                    <span>Pediatrics</span>
+                    <div className="performance-bar">
+                      <div className="performance-fill" style={{width: '95%'}}></div>
+                    </div>
+                    <span>95%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+        
+      case 'system':
+        return (
+          <div className="section-content">
+            <div className="section-header">
+              <h2>System Management</h2>
+              <div className="breadcrumb">Home / System</div>
+            </div>
+            
+            <div className="system-grid">
+              <div className="system-card">
+                <h3>Server Status</h3>
+                <div className="system-metrics">
+                  <div className="metric">
+                    <span className="metric-label">CPU Usage</span>
+                    <div className="metric-bar">
+                      <div className="metric-fill" style={{width: '45%', backgroundColor: '#27ae60'}}></div>
+                    </div>
+                    <span className="metric-value">45%</span>
+                  </div>
+                  <div className="metric">
+                    <span className="metric-label">Memory</span>
+                    <div className="metric-bar">
+                      <div className="metric-fill" style={{width: '62%', backgroundColor: '#f39c12'}}></div>
+                    </div>
+                    <span className="metric-value">62%</span>
+                  </div>
+                  <div className="metric">
+                    <span className="metric-label">Storage</span>
+                    <div className="metric-bar">
+                      <div className="metric-fill" style={{width: '78%', backgroundColor: '#e74c3c'}}></div>
+                    </div>
+                    <span className="metric-value">78%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="system-card">
+                <h3>Database Status</h3>
+                <div className="status-grid">
+                  <div className="status-item">
+                    <span className="status-dot status-online"></span>
+                    <span>Primary Database</span>
+                  </div>
+                  <div className="status-item">
+                    <span className="status-dot status-online"></span>
+                    <span>Backup Database</span>
+                  </div>
+                  <div className="status-item">
+                    <span className="status-dot status-warning"></span>
+                    <span>Cache Server</span>
+                  </div>
+                  <div className="status-item">
+                    <span className="status-dot status-online"></span>
+                    <span>File Storage</span>
+                  </div>
+                </div>
+                <button className="btn-primary">Run Diagnostics</button>
+              </div>
+              
+              <div className="system-card">
+                <h3>System Logs</h3>
+                <div className="log-list">
+                  <div className="log-item">
+                    <span className="log-time">14:32:15</span>
+                    <span className="log-level info">INFO</span>
+                    <span className="log-message">User login successful</span>
+                  </div>
+                  <div className="log-item">
+                    <span className="log-time">14:28:42</span>
+                    <span className="log-level warning">WARN</span>
+                    <span className="log-message">High memory usage detected</span>
+                  </div>
+                  <div className="log-item">
+                    <span className="log-time">14:25:18</span>
+                    <span className="log-level info">INFO</span>
+                    <span className="log-message">Database backup completed</span>
+                  </div>
+                </div>
+                <button className="btn-primary">View All Logs</button>
+              </div>
+            </div>
+          </div>
+        );
+        
+      case 'billing':
+        return (
+          <div className="section-content">
+            <div className="section-header">
+              <h2>Billing Management</h2>
+              <div className="breadcrumb">Home / Billing</div>
+              <button className="btn-primary">Create Invoice</button>
+            </div>
+            
+            <div className="billing-stats">
+              <div className="billing-card">
+                <h4>Outstanding Invoices</h4>
+                <div className="billing-amount">$45,230</div>
+                <div className="billing-count">23 invoices</div>
+              </div>
+              <div className="billing-card">
+                <h4>Paid This Month</h4>
+                <div className="billing-amount">$189,450</div>
+                <div className="billing-count">156 payments</div>
+              </div>
+              <div className="billing-card">
+                <h4>Overdue</h4>
+                <div className="billing-amount">$12,890</div>
+                <div className="billing-count">8 invoices</div>
+              </div>
+            </div>
+            
+            <div className="dashboard-card">
+              <h3>Recent Invoices</h3>
+              <div className="invoice-list">
+                <div className="invoice-item">
+                  <div className="invoice-info">
+                    <div className="invoice-number">#INV-2024-001</div>
+                    <div className="invoice-patient">John Doe - Consultation</div>
+                  </div>
+                  <div className="invoice-amount">$250.00</div>
+                  <div className="invoice-status paid">Paid</div>
+                </div>
+                <div className="invoice-item">
+                  <div className="invoice-info">
+                    <div className="invoice-number">#INV-2024-002</div>
+                    <div className="invoice-patient">Jane Smith - Surgery</div>
+                  </div>
+                  <div className="invoice-amount">$1,200.00</div>
+                  <div className="invoice-status pending">Pending</div>
+                </div>
+                <div className="invoice-item">
+                  <div className="invoice-info">
+                    <div className="invoice-number">#INV-2024-003</div>
+                    <div className="invoice-patient">Bob Wilson - Check-up</div>
+                  </div>
+                  <div className="invoice-amount">$150.00</div>
+                  <div className="invoice-status overdue">Overdue</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+        
+      case 'payroll':
+        return (
+          <div className="section-content">
+            <div className="section-header">
+              <h2>Payroll Management</h2>
+              <div className="breadcrumb">Home / Payroll</div>
+              <button className="btn-primary">Process Payroll</button>
+            </div>
+            
+            <div className="payroll-summary">
+              <div className="payroll-card">
+                <h4>Total Payroll</h4>
+                <div className="payroll-amount">$89,450</div>
+                <div className="payroll-period">Current Month</div>
+              </div>
+              <div className="payroll-card">
+                <h4>Employees</h4>
+                <div className="payroll-amount">156</div>
+                <div className="payroll-period">Active Staff</div>
+              </div>
+              <div className="payroll-card">
+                <h4>Pending</h4>
+                <div className="payroll-amount">12</div>
+                <div className="payroll-period">Approvals</div>
+              </div>
+            </div>
+            
+            <div className="dashboard-card">
+              <h3>Payroll Schedule</h3>
+              <div className="schedule-list">
+                <div className="schedule-item">
+                  <div className="schedule-date">January 31, 2024</div>
+                  <div className="schedule-type">Monthly Salary</div>
+                  <div className="schedule-amount">$89,450</div>
+                  <div className="schedule-status processed">Processed</div>
+                </div>
+                <div className="schedule-item">
+                  <div className="schedule-date">February 15, 2024</div>
+                  <div className="schedule-type">Bonus Payments</div>
+                  <div className="schedule-amount">$15,200</div>
+                  <div className="schedule-status pending">Pending</div>
+                </div>
+                <div className="schedule-item">
+                  <div className="schedule-date">February 28, 2024</div>
+                  <div className="schedule-type">Monthly Salary</div>
+                  <div className="schedule-amount">$91,200</div>
+                  <div className="schedule-status scheduled">Scheduled</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+        
+      case 'marketing':
+        return (
+          <div className="section-content">
+            <div className="section-header">
+              <h2>Marketing Dashboard</h2>
+              <div className="breadcrumb">Home / Marketing</div>
+              <button className="btn-primary">New Campaign</button>
+            </div>
+            
+            <div className="marketing-stats">
+              <div className="marketing-card">
+                <h4>Website Visitors</h4>
+                <div className="marketing-number">12,450</div>
+                <div className="marketing-change">+15% this month</div>
+              </div>
+              <div className="marketing-card">
+                <h4>Lead Conversion</h4>
+                <div className="marketing-number">8.5%</div>
+                <div className="marketing-change">+2.1% improvement</div>
+              </div>
+              <div className="marketing-card">
+                <h4>Active Campaigns</h4>
+                <div className="marketing-number">6</div>
+                <div className="marketing-change">2 launching soon</div>
+              </div>
+            </div>
+            
+            <div className="dashboard-card">
+              <h3>Campaign Performance</h3>
+              <div className="campaign-list">
+                <div className="campaign-item">
+                  <div className="campaign-info">
+                    <div className="campaign-name">Health Checkup Promotion</div>
+                    <div className="campaign-dates">Jan 1 - Jan 31, 2024</div>
+                  </div>
+                  <div className="campaign-metrics">
+                    <span>Reach: 15K</span>
+                    <span>Conversions: 234</span>
+                  </div>
+                  <div className="campaign-status active">Active</div>
+                </div>
+                <div className="campaign-item">
+                  <div className="campaign-info">
+                    <div className="campaign-name">Vaccination Drive</div>
+                    <div className="campaign-dates">Dec 15 - Jan 15, 2024</div>
+                  </div>
+                  <div className="campaign-metrics">
+                    <span>Reach: 8.5K</span>
+                    <span>Conversions: 156</span>
+                  </div>
+                  <div className="campaign-status completed">Completed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+        
+      case 'campaigns':
+        return (
+          <div className="section-content">
+            <div className="section-header">
+              <h2>Campaign Management</h2>
+              <div className="breadcrumb">Home / Campaigns</div>
+              <button className="btn-primary">Create Campaign</button>
+            </div>
+            
+            <div className="campaigns-grid">
+              <div className="campaign-card">
+                <div className="campaign-header">
+                  <h3>Winter Health Package</h3>
+                  <span className="campaign-status active">Active</span>
+                </div>
+                <div className="campaign-details">
+                  <p>Comprehensive health checkup package for winter season</p>
+                  <div className="campaign-metrics">
+                    <div className="metric-item">
+                      <span className="metric-label">Budget:</span>
+                      <span className="metric-value">$5,000</span>
+                    </div>
+                    <div className="metric-item">
+                      <span className="metric-label">Spent:</span>
+                      <span className="metric-value">$3,200</span>
+                    </div>
+                    <div className="metric-item">
+                      <span className="metric-label">Leads:</span>
+                      <span className="metric-value">156</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="campaign-actions">
+                  <button className="btn-sm">Edit</button>
+                  <button className="btn-sm">Analytics</button>
+                </div>
+              </div>
+              
+              <div className="campaign-card">
+                <div className="campaign-header">
+                  <h3>Pediatric Care Awareness</h3>
+                  <span className="campaign-status draft">Draft</span>
+                </div>
+                <div className="campaign-details">
+                  <p>Educational campaign about pediatric healthcare</p>
+                  <div className="campaign-metrics">
+                    <div className="metric-item">
+                      <span className="metric-label">Budget:</span>
+                      <span className="metric-value">$3,500</span>
+                    </div>
+                    <div className="metric-item">
+                      <span className="metric-label">Launch:</span>
+                      <span className="metric-value">Feb 15</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="campaign-actions">
+                  <button className="btn-sm">Launch</button>
+                  <button className="btn-sm">Edit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+        
+      case 'legal':
+        return (
+          <div className="section-content">
+            <div className="section-header">
+              <h2>Legal Affairs</h2>
+              <div className="breadcrumb">Home / Legal</div>
+              <button className="btn-primary">New Document</button>
+            </div>
+            
+            <div className="legal-grid">
+              <div className="legal-card">
+                <h3>Contracts & Agreements</h3>
+                <div className="legal-stats">
+                  <div className="legal-stat">
+                    <span className="stat-number">45</span>
+                    <span className="stat-label">Active Contracts</span>
+                  </div>
+                  <div className="legal-stat">
+                    <span className="stat-number">8</span>
+                    <span className="stat-label">Pending Review</span>
+                  </div>
+                </div>
+                <button className="btn-primary">Manage Contracts</button>
+              </div>
+              
+              <div className="legal-card">
+                <h3>Compliance Status</h3>
+                <div className="compliance-list">
+                  <div className="compliance-item">
+                    <span className="compliance-name">HIPAA Compliance</span>
+                    <span className="compliance-status compliant">✓ Compliant</span>
+                  </div>
+                  <div className="compliance-item">
+                    <span className="compliance-name">Data Protection</span>
+                    <span className="compliance-status compliant">✓ Compliant</span>
+                  </div>
+                  <div className="compliance-item">
+                    <span className="compliance-name">Medical Licensing</span>
+                    <span className="compliance-status warning">⚠ Review Required</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="legal-card">
+                <h3>Legal Documents</h3>
+                <div className="document-list">
+                  <div className="document-item">
+                    <span className="document-name">Privacy Policy</span>
+                    <span className="document-date">Updated: Jan 10, 2024</span>
+                  </div>
+                  <div className="document-item">
+                    <span className="document-name">Terms of Service</span>
+                    <span className="document-date">Updated: Dec 15, 2023</span>
+                  </div>
+                  <div className="document-item">
+                    <span className="document-name">Patient Consent Forms</span>
+                    <span className="document-date">Updated: Jan 5, 2024</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+        
+      case 'compliance':
+        return (
+          <div className="section-content">
+            <div className="section-header">
+              <h2>Compliance Management</h2>
+              <div className="breadcrumb">Home / Compliance</div>
+              <button className="btn-primary">Run Audit</button>
+            </div>
+            
+            <div className="compliance-dashboard">
+              <div className="compliance-overview">
+                <div className="compliance-score">
+                  <div className="score-circle">
+                    <div className="score-number">94%</div>
+                    <div className="score-label">Compliance Score</div>
+                  </div>
+                </div>
+                <div className="compliance-summary">
+                  <div className="summary-item">
+                    <span className="summary-number">12</span>
+                    <span className="summary-label">Policies</span>
+                  </div>
+                  <div className="summary-item">
+                    <span className="summary-number">3</span>
+                    <span className="summary-label">Audits</span>
+                  </div>
+                  <div className="summary-item">
+                    <span className="summary-number">1</span>
+                    <span className="summary-label">Issues</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="compliance-checklist">
+                <h3>Compliance Checklist</h3>
+                <div className="checklist-item completed">
+                  <span className="checklist-icon">✓</span>
+                  <span className="checklist-text">HIPAA Privacy Rule Implementation</span>
+                  <span className="checklist-date">Completed: Jan 15, 2024</span>
+                </div>
+                <div className="checklist-item completed">
+                  <span className="checklist-icon">✓</span>
+                  <span className="checklist-text">Staff Training on Data Protection</span>
+                  <span className="checklist-date">Completed: Jan 10, 2024</span>
+                </div>
+                <div className="checklist-item pending">
+                  <span className="checklist-icon">⏳</span>
+                  <span className="checklist-text">Annual Security Assessment</span>
+                  <span className="checklist-date">Due: Feb 1, 2024</span>
+                </div>
+                <div className="checklist-item pending">
+                  <span className="checklist-icon">⏳</span>
+                  <span className="checklist-text">Medical License Renewal</span>
+                  <span className="checklist-date">Due: Mar 15, 2024</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+        
+      case 'operations':
+        return (
+          <div className="section-content">
+            <div className="section-header">
+              <h2>Operations Management</h2>
+              <div className="breadcrumb">Home / Operations</div>
+            </div>
+            
+            <div className="operations-grid">
+              <div className="operations-card">
+                <h3>Facility Management</h3>
+                <div className="facility-stats">
+                  <div className="facility-item">
+                    <span className="facility-label">Room Occupancy</span>
+                    <span className="facility-value">78%</span>
+                  </div>
+                  <div className="facility-item">
+                    <span className="facility-label">Equipment Status</span>
+                    <span className="facility-value status-good">Good</span>
+                  </div>
+                  <div className="facility-item">
+                    <span className="facility-label">Maintenance Due</span>
+                    <span className="facility-value">3 items</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="operations-card">
+                <h3>Supply Chain</h3>
+                <div className="supply-list">
+                  <div className="supply-item">
+                    <span className="supply-name">Medical Supplies</span>
+                    <div className="supply-bar">
+                      <div className="supply-fill" style={{width: '85%'}}></div>
+                    </div>
+                    <span className="supply-level">85%</span>
+                  </div>
+                  <div className="supply-item">
+                    <span className="supply-name">Pharmaceuticals</span>
+                    <div className="supply-bar">
+                      <div className="supply-fill" style={{width: '45%', backgroundColor: '#f39c12'}}></div>
+                    </div>
+                    <span className="supply-level">45%</span>
+                  </div>
+                  <div className="supply-item">
+                    <span className="supply-name">PPE Equipment</span>
+                    <div className="supply-bar">
+                      <div className="supply-fill" style={{width: '92%'}}></div>
+                    </div>
+                    <span className="supply-level">92%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="operations-card">
+                <h3>Quality Metrics</h3>
+                <div className="quality-metrics">
+                  <div className="quality-item">
+                    <span className="quality-label">Patient Satisfaction</span>
+                    <span className="quality-score">4.8/5</span>
+                  </div>
+                  <div className="quality-item">
+                    <span className="quality-label">Wait Time Average</span>
+                    <span className="quality-score">12 min</span>
+                  </div>
+                  <div className="quality-item">
+                    <span className="quality-label">Service Quality</span>
+                    <span className="quality-score">96%</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
