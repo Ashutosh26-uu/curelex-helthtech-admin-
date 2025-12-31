@@ -67,39 +67,39 @@ function Login({ onLogin }) {
 
   const handlePasswordReset = async (e) => {
     e.preventDefault();
-    
+
     if (!resetEmail.trim()) {
       setError('Please enter your email address');
       return;
     }
-    
+
     if (!checkEmailExists(resetEmail.trim())) {
       setError('Email address not found in our system');
       return;
     }
-    
+
     if (!newPassword || newPassword.length < 8) {
       setError('Password must be at least 8 characters long');
       return;
     }
-    
+
     if (newPassword !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-    
+
     // Simulate password reset process
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     const result = resetPassword(resetEmail.trim(), newPassword);
-    
+
     if (result.success) {
       setError('');
       setShowResetModal(false);
       setResetEmail('');
       setNewPassword('');
       setConfirmPassword('');
-      
+
       // Show success message
       alert('Password reset successful! You can now login with your new password.');
     } else {
@@ -122,7 +122,7 @@ function Login({ onLogin }) {
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
             </svg>
           </div>
-          <h1>Curelex HealthTech Admin</h1>
+          <h1>Curelex Admin</h1>
           <p>Secure Portal Access</p>
         </div>
 
@@ -210,9 +210,9 @@ function Login({ onLogin }) {
                 Clear Form
               </button>
             )}
-            
-            <button 
-              type="button" 
+
+            <button
+              type="button"
               className="reset-password-btn"
               onClick={() => setShowResetModal(true)}
             >
@@ -240,8 +240,8 @@ function Login({ onLogin }) {
           <div className={`credentials-container ${showDemo ? 'expanded' : ''}`}>
             <div className="dropdown-menu">
               <label htmlFor="role-select">Select Role to Auto-Login:</label>
-              <select 
-                id="role-select" 
+              <select
+                id="role-select"
                 className="role-dropdown"
                 onChange={(e) => {
                   const selectedEmail = e.target.value;
@@ -259,15 +259,15 @@ function Login({ onLogin }) {
                   </option>
                 ))}
               </select>
-              
+
               {selectedCredential && (
                 <div className="selected-account">
                   <div className="account-info">
                     <div className="account-role">{getCredentials()[selectedCredential]?.role}</div>
                     <div className="account-email">{selectedCredential}</div>
                   </div>
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     className="clear-selection"
                     onClick={() => {
                       setSelectedCredential(null);
@@ -284,21 +284,21 @@ function Login({ onLogin }) {
           </div>
         </div>
       </div>
-      
+
       {/* Password Reset Modal */}
       {showResetModal && (
         <div className="modal-overlay" onClick={() => setShowResetModal(false)}>
           <div className="reset-modal" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
               <h2>Reset Password</h2>
-              <button 
+              <button
                 className="modal-close"
                 onClick={() => setShowResetModal(false)}
               >
                 ×
               </button>
             </div>
-            
+
             <form onSubmit={handlePasswordReset} className="reset-form">
               <div className="form-group">
                 <label>Email Address</label>
@@ -310,7 +310,7 @@ function Login({ onLogin }) {
                   required
                 />
               </div>
-              
+
               <div className="form-group">
                 <label>New Password</label>
                 <input
@@ -322,7 +322,7 @@ function Login({ onLogin }) {
                   minLength="8"
                 />
               </div>
-              
+
               <div className="form-group">
                 <label>Confirm Password</label>
                 <input
@@ -333,10 +333,10 @@ function Login({ onLogin }) {
                   required
                 />
               </div>
-              
+
               <div className="modal-actions">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="cancel-btn"
                   onClick={() => setShowResetModal(false)}
                 >
